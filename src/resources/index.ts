@@ -1,5 +1,4 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import {  } from '../MistTrackMCPServer.js';
 import { registerSupportedCoinsResource } from './supportedCoinsResource.js';
 import { registerApiDocResource } from './apiDocResource.js';
 import { registerRiskLevelGuideResource } from './riskLevelGuideResource.js';
@@ -12,8 +11,6 @@ import { registerUserProfileTemplateResource } from './userProfileTemplateResour
  * @param server MCP server instance
  */
 export function registerAllMisttrackResources(server: McpServer) {
-
-
   // Register various resource plugins
   registerSupportedCoinsResource(server);
   registerApiDocResource(server);
@@ -21,7 +18,6 @@ export function registerAllMisttrackResources(server: McpServer) {
   registerChainSupportResource(server);
   registerRiskDescriptionsResource(server);
   registerUserProfileTemplateResource(server);
-
 }
 
 // Export all resource plugins, allowing selective registration

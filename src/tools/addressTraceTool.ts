@@ -48,6 +48,8 @@ Malicious events:
   ${formatList(maliciousEvent.ransom?.ransom_list || [])}
 - Theft: ${maliciousEvent.stealing?.count || 0}
   ${formatList(maliciousEvent.stealing?.stealing_list || [])}
+- Laundering: ${maliciousEvent.laundering?.count || 0}
+  ${formatList(maliciousEvent.laundering?.laundering_list || [])}
 
 Related information:
 - Wallets: ${relationInfo.wallet?.count || 0}

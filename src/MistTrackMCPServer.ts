@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import dotenv from 'dotenv';
+import packageJson from '../package.json';
 import { MistTrackClientManager } from './utils/misttrackClientManager.js';
 
 // Load environment variables
@@ -53,7 +54,7 @@ const updateMistTrackConfig = (newConfig: Partial<MistTrackConfig>) => {
 const getServer = () => {
   const server = new McpServer({
     name: 'misttrack-mcp-server',
-    version: '1.0.1',
+    version: packageJson.version,
   }, { capabilities: { logging: {} } });
 
   // Register all tools
@@ -73,13 +74,8 @@ const getServer = () => {
  * @param mode Server running mode
  */
 export async function main(mode: ServerMode = ServerMode.STUDIO) {
-  // Log environment variable information, to help with debugging
-  if (process.env.MISTTRACK_API_KEY) {
-    // Only print first few characters and last few characters, avoid exposing full key
-    const key = process.env.MISTTRACK_API_KEY;
-    const maskedKey = key.length > 8 ? 
-      `${key.substring(0, 4)}...${key.substring(key.length - 4)}` : 
-      '***set but not shown***';
+  if (mode !== ServerMode.STUDIO) {
+    throw new Error(`Unsupported server mode: ${mode}`);
   }
 
   // Initialize MistTrackClientManager

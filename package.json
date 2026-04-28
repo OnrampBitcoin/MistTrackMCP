@@ -1,6 +1,6 @@
 {
   "name": "misttrack",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "main": "dist/MistTrackMCPServer.js",
   "bin": {
     "misttrack": "dist/index.js"
@@ -28,7 +28,7 @@
   ],
   "author": "slowmist",
   "license": "ISC",
-  "description": "MistTrack MCP Server - 为Claude提供MistTrack区块链分析功能",
+  "description": "MistTrack MCP Server - 提供MistTrack区块链分析功能",
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.15.3",

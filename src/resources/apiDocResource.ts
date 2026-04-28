@@ -59,7 +59,25 @@ MistTrack MCP supports multiple mainstream blockchains, including:
 5. Further investigate through dashboard and explorer URLs
 
 ## 🔒 Risk Assessment
-MistTrack provides risk scores from 0-100, divided into four levels:
+MistTrack Risk Score V3.0 uses \`GET /v3/risk_score\` and supports either address-based or transaction-based KYT/KYA checks.
+
+Query parameters:
+- \`coin\`: coin or token code to check.
+- \`address\`: address to check, optional. Provide either \`address\` or \`txid\`, not both.
+- \`txid\`: transaction hash to check, optional. Provide either \`address\` or \`txid\`, not both.
+- \`direction\`: \`deposit\` or \`withdraw\`, optional and only effective when \`txid\` is provided. Defaults to \`deposit\`.
+- \`api_key\`: MistTrack API key.
+
+Important V3 response fields:
+- \`score\`: risk score, range 3-100 in the V3 API response.
+- \`risk_level\`: Low / Moderate / High / Severe.
+- \`detail_list\`: list of risk indicators.
+- \`risk_detail\`: detailed risk exposure calculation records.
+- \`risk_detail[].hop_dic\`: hop-level fund flow path between the queried target and the risk entity.
+- \`address_label\`: entity label of the queried address, or the corresponding from/to address label for txid + direction queries.
+- \`risk_report_url\`: URL for the MistTrack AML risk report.
+
+Risk scores are divided into four levels:
 - Severe: 91-100 - Prohibit withdrawals and transactions, report immediately
 - High: 71-90 - Requires high-level monitoring and analysis
 - Moderate: 31-70 - Requires moderate supervision

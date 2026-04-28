@@ -231,15 +231,25 @@ export class MistTrackClient {
   }
 
   /**
-   * Get risk score for specified address or transaction hash
+   * Get risk score for specified address or transaction hash using MistTrack Risk Score V3.0
    * 
    * @param coin Coin to check, such as ETH, BTC, etc.
-   * @param address Address to check (address and txid must pass at least one)
-   * @param txid Transaction hash to check (address and txid must pass at least one)
+   * @param address Address to check (pass either address or txid)
+   * @param txid Transaction hash to check (pass either address or txid)
+   * @param direction Transaction direction for txid queries, deposit or withdraw
    */
-  async getRiskScore(coin: string, address?: string, txid?: string): Promise<MistTrackResponse> {
+  async getRiskScore(
+    coin: string,
+    address?: string,
+    txid?: string,
+    direction?: 'deposit' | 'withdraw'
+  ): Promise<MistTrackResponse> {
     if (!address && !txid) {
       return { success: false, msg: 'Must provide address or txid parameter', data: null };
+    }
+
+    if (address && txid) {
+      return { success: false, msg: 'Pass either address or txid, not both', data: null };
     }
 
     const params: MistTrackRequestParams = {
@@ -253,8 +263,11 @@ export class MistTrackClient {
     if (txid) {
       params.txid = txid;
     }
+    if (txid && direction) {
+      params.direction = direction;
+    }
 
-    return this.makeRequest('/v1/risk_score', params);
+    return this.makeRequest('/v3/risk_score', params);
   }
 
   /**

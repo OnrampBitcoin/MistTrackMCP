@@ -22,7 +22,7 @@ IoTeX:
 IOTX
 
 Polygon:
-MATIC-Polygon, WMATIC-Polygon, WETH-Polygon, etc.
+POL-Polygon, WMATIC-Polygon, WETH-Polygon, USDC-Polygon, USDT-Polygon, etc.
 
 Avalanche:
 AVAX-Avalanche, WAVAX-Avalanche, etc.
@@ -55,7 +55,13 @@ Dogecoin:
 DOGE
 
 Bitcoin Cash:
-BCH`;
+BCH
+
+HashKey Chain:
+HSK
+
+Sui:
+SUI, wUSDT-SUI, USDC-SUI`;
 }
 
 /**

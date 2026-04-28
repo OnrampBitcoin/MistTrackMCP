@@ -43,7 +43,7 @@ Detection focus:
 Please provide a detailed illicit fund detection report, including:
 1. Risk assessment results (whether there is a risk of illicit funds)
    - Risk score explanation (0-100 points)
-   - Risk level (Critical/High/Medium/Low)
+   - Risk level (Severe/High/Moderate/Low)
 2. Suspicious signs and evidence found
    - Number of phishing incidents
    - Number of ransomware incidents
@@ -178,7 +178,7 @@ Analysis steps:
    - analyze_transactions_recursive - Analyze fund flows
    - check_malicious_funds - Check malicious fund risks
 
-3. For EVM-compatible chains (such as ETH, BSC, AVAX, MATIC, etc.), pay special attention to:
+3. For EVM-compatible chains (such as ETH, BNB, AVAX-Avalanche, POL-Polygon, etc.), pay special attention to:
    - Comparison of activities of the same address on different chains
    - Cross-chain bridge transactions and asset transfer patterns
    - Similarities and differences in counterparties across chains

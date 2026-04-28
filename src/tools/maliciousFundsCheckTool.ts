@@ -11,7 +11,7 @@ export function registerMaliciousFundsCheckTool(server: McpServer): void {
     'check_malicious_funds',
     'Check if the specified address contains malicious funds (e.g. tainted USDT)',
     {
-      coin: z.string().describe('Coin type to check, automatically determined based on address format, prioritizes checking tainted USDT'),
+      coin: z.string().describe('Coin type to check, such as ETH, BTC, USDT-TRC20, etc. Use detect_address_chain first if the coin is unknown.'),
       address: z.string().describe('Address to check'),
     },
     async ({ coin, address }): Promise<CallToolResult> => {
@@ -30,8 +30,9 @@ export function registerMaliciousFundsCheckTool(server: McpServer): void {
           const phishingCount = maliciousEvent.phishing?.count || 0;
           const ransomCount = maliciousEvent.ransom?.count || 0;
           const stealingCount = maliciousEvent.stealing?.count || 0;
+          const launderingCount = maliciousEvent.laundering?.count || 0;
           
-          const totalMaliciousEvents = phishingCount + ransomCount + stealingCount;
+          const totalMaliciousEvents = phishingCount + ransomCount + stealingCount + launderingCount;
           
           // Build result text
           let resultText = `Malicious funds analysis for address ${address} (${coin}):\n\n`;
@@ -41,7 +42,8 @@ export function registerMaliciousFundsCheckTool(server: McpServer): void {
             resultText += "Malicious events statistics:\n";
             resultText += `- Phishing events: ${phishingCount}\n`;
             resultText += `- Ransomware events: ${ransomCount}\n`;
-            resultText += `- Theft events: ${stealingCount}\n\n`;
+            resultText += `- Theft events: ${stealingCount}\n`;
+            resultText += `- Laundering events: ${launderingCount}\n\n`;
           } else {
             resultText += "✅ No malicious funds risk detected";
           }

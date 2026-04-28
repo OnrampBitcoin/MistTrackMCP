@@ -26,18 +26,33 @@ export function registerAddressDetectorTool(server: McpServer): void {
         recommended_coins: string[];
       };
       
-      // Check Ethereum series addresses (including ETH, BNB Smart Chain, AVAX C-Chain, MATIC and other EVM chains)
+      // Check EVM-format addresses (including Ethereum, BNB Smart Chain, Polygon, Avalanche, and other EVM chains)
       if (/^0x[a-fA-F0-9]{40}$/.test(address)) {
         result = {
           success: true,
           address: address,
-          detected_chains: ["ETH", "BSC", "AVAX", "MATIC", "ARBITRUM", "OPTIMISM"],
-          description: "This is an Ethereum format address, which may apply to multiple EVM-compatible chains, including Ethereum, Binance Smart Chain, Avalanche C-Chain, Polygon, etc.",
-          recommended_coins: ["ETH", "BSC", "MATIC", "AVAX", "USDT-ERC20", "USDC-ERC20", "WETH-ERC20", "BNB-ERC20", "UNI-ERC20", "BUSD-ERC20", "DAI-ERC20"]
+          detected_chains: ["ETH", "BNB", "POL-Polygon", "AVAX-Avalanche", "ETH-Arbitrum", "ETH-Optimism", "ETH-Base"],
+          description: "This is an EVM-format address, which may apply to multiple EVM-compatible chains, including Ethereum, BNB Smart Chain, Polygon, Avalanche, Arbitrum, Optimism, Base, etc.",
+          recommended_coins: [
+            "ETH",
+            "USDT-ERC20",
+            "USDC-ERC20",
+            "BNB",
+            "USDT-BEP20",
+            "POL-Polygon",
+            "USDT-Polygon",
+            "AVAX-Avalanche",
+            "ETH-Arbitrum",
+            "ETH-Optimism",
+            "ETH-Base"
+          ]
         };
       } 
       // Check Bitcoin addresses
-      else if ((address.startsWith('1') || address.startsWith('3') || address.startsWith('bc1')) && address.length >= 26 && address.length <= 35) {
+      else if (
+        (/^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(address)) ||
+        (/^bc1[ac-hj-np-z02-9]{11,71}$/i.test(address))
+      ) {
         result = {
           success: true,
           address: address,
@@ -56,14 +71,14 @@ export function registerAddressDetectorTool(server: McpServer): void {
           recommended_coins: ["TRX", "USDT-TRC20"]
         };
       }
-      // Check Ripple addresses
+      // Check Ripple addresses. MistTrack OpenAPI may not support XRP in the current public coin list.
       else if (/^r[a-zA-Z0-9]{24,34}$/.test(address)) {
         result = {
           success: true,
           address: address,
           detected_chains: ["XRP"],
-          description: "This is a Ripple format address.",
-          recommended_coins: ["XRP"]
+          description: "This is a Ripple format address. XRP is not listed in the current MistTrack OpenAPI coin list, so API queries may return UnsupportedToken.",
+          recommended_coins: []
         };
       }
       // Check Solana addresses
